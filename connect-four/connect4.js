@@ -34,16 +34,20 @@ function makeBoard() {
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  var htmlBoard = document.getElementById('board');
+  const htmlBoard = document.getElementById('board');
 
   // TODO: add comment for this code
-  var top = document.createElement("tr");
+  // create a top cell of our column, set its attributes to
+  // css style, and add event listener to drop game piece
+  // when cell is clicked;
+  let top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
   // TODO: add comment for this code
-  for (var x = 0; x < WIDTH; x++) {
-    var headCell = document.createElement("td");
+  //  create board;
+  for (let x = 0; x < WIDTH; x++) {
+    const headCell = document.createElement("td");
     headCell.setAttribute("id", `top-${x}`);
     top.append(headCell);
   }
@@ -54,9 +58,15 @@ function makeHtmlBoard() {
   // uses WIDTH to create table cells for each row
   for (var y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
+    let row = document.createElement('tr');
 
     for (var x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
+    let cell = document.createElement('td');
+    cell.setAttribute('id', 'c-y-x');
+
+    row.appendChild(cell);
+
 
       // TODO: add an id, c-y-x, to the above table cell element
       // you'll use this later, so make sure you use c-y-x
@@ -65,6 +75,7 @@ function makeHtmlBoard() {
 
     }
     // TODO: append the row to the html board
+    htmlBoard.appendChild(row);
 
   }
 }
@@ -73,7 +84,9 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
-  return 5;
+  for (let i = 0; i < HEIGHT; i++) {
+    if ([x][i] === null)
+  }
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
