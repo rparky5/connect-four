@@ -63,7 +63,7 @@ function makeHtmlBoard() {
     for (var x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
     let cell = document.createElement('td');
-    cell.setAttribute('id', 'c-y-x');
+    cell.setAttribute('id', `c-${y}-${x}`);
 
     row.appendChild(cell);
 
@@ -84,8 +84,11 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
-  for (let i = 0; i < HEIGHT; i++) {
-    if ([x][i] === null)
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    if ([x][y] === null) {
+      return y;
+    }
+    return null;
   }
 }
 
@@ -93,19 +96,25 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  let piece = document.createElement('div');
+
+  let cell = document.getElementById(`c-${y}-${x}`);
+  cell.appendChild(piece);
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
   // TODO: pop up alert message
+  window.alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id;
+  //var x = +evt.target.id;
+  const x = Number(evt.target.id.slice("top-".length));
 
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
@@ -116,6 +125,7 @@ function handleClick(evt) {
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
   placeInTable(y, x);
+  board[y][x] = 1;
 
   // check for win
   if (checkForWin()) {
@@ -124,7 +134,10 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-
+  const isNotNull = 1;
+  if (board[0].every(isNotNull)) {
+    endGame('Draw');
+  }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
 }
